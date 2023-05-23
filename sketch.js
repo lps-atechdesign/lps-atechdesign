@@ -1,7 +1,7 @@
 let x=100
 let y=100
 function setup() {
-  createCanvas(800, 600);
+  createCanvas(window.innerWidth-10, window.innerHeight-10);
 
   let inpX = createInput('');
   inpX.position(50, 550);
