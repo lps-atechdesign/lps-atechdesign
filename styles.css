@@ -1,14 +1,7 @@
-.timer {
-    text-align: center;
-    margin-top: 50px;
-  }
-  
-  h1 {
-    font-size: 48px;
-  }
-  
-  button {
-    font-size: 24px;
-    margin-top: 20px;
-  }
-  
+html, body {
+  margin: 0;
+  padding: 0;
+}
+canvas {
+  display: block;
+}
