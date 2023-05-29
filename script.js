@@ -10,7 +10,7 @@ let times=[]
 let stageTime
 
 let countdownList = [];
-let stagesName = ["REVIEW","GENERATE","REPORT","EMAIL"]
+let stagesName = ["REVIEW","GENERATE","REPORT","EMAIL","COMPLETE"]
 let stagesDuration = [1800,1800,3600,900]
 
 let triggerorderNum = " "
@@ -25,7 +25,7 @@ function setup() {
 
   createCanvas(window.innerWidth - 10, window.innerHeight - 10);
 
-  inpX = createInput();
+  inpX = createInput("BT-XXX");
   inpX.position(160, 32);
   inpX.size(100);
 
@@ -47,7 +47,7 @@ function setup() {
   );
   completeButton.mousePressed(nextStage);
   
-  saveButton = createButton("Save");
+  saveButton = createButton("Save Image");
   saveButton.position(width-200, height-200);
   saveButton.mousePressed(saveImg);
 
@@ -56,9 +56,11 @@ function setup() {
 }
 
 function draw() {
+  
+
+  
   frameRate(1);
   background(220);
-
   textSize(20);
   textAlign(LEFT);
   fill(0);
@@ -88,8 +90,7 @@ function draw() {
     displayTime(bubble); // Call displayTime() for each bubble object
   }
   
-  
-}
+  }
 
 //____________________________________________
 //my other functions
@@ -99,11 +100,17 @@ function draw() {
 
 function systemStart() {
   orderNum = inpX.value();
+  
+  if (orderNum != "BT-XXX"){
   console.log(orderNum);
   countdownBoolean = 1;
   fill(0);
   triggerorderNum=orderNum
-  
+  } else {
+    fill(255,0,0)
+    textSize(15)
+    text ("*Invalid Input", 160,80)
+  }
 }
 
 function countdownFunction() {
@@ -154,6 +161,7 @@ function nextStage() {
 
 
 function saveImg (){
+  
   save(orderNum)
 
 }
