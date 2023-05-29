@@ -5,11 +5,24 @@ let completeButton;
 let inpX;
 let countdownBoolean = 0;
 
+let joinTime
+let times=[]
+let stageTime
+
 let countdownList = [];
 let stagesName = ["REVIEW","GENERATE","REPORT","EMAIL"]
 let stagesDuration = [1800,1800,3600,900]
 
+let triggerorderNum = " "
+
+//____________________________________________________
+let bubbles = []; // Array to store bubble objects
+let rowHeight = 30; // Height between rows
+//____________________________________________________
+
 function setup() {
+  
+
   createCanvas(window.innerWidth - 10, window.innerHeight - 10);
 
   inpX = createInput();
@@ -33,10 +46,13 @@ function setup() {
     height / 2 + 50
   );
   completeButton.mousePressed(nextStage);
+  
+  saveButton = createButton("Save");
+  saveButton.position(width-200, height-200);
+  saveButton.mousePressed(saveImg);
 
-  saveButton = createButton("Save Data");
-  saveButton.position(width - 200, height - 100);
-  saveButton.mousePressed(saveImage);
+
+
 }
 
 function draw() {
@@ -47,7 +63,9 @@ function draw() {
   textAlign(LEFT);
   fill(0);
   text("Order No.# :", 40, 50);
+  
 
+  
   countdownFunction(); //my countdown function
 
   noStroke();
@@ -57,17 +75,35 @@ function draw() {
   for (let index = 0; index < stageNum-1; index = index + 1) {
     fill(0);
     textSize(20);
-    text(str(countdownList[index]), width - 150, 100 + index * 30);
-    
+    text(str(countdownList[index]), width - 190, 100 + index * 30);
   }
+  funcTime()
+  fill(0)
+  textSize(20);
+  textAlign(LEFT)
+  text(triggerorderNum,width-200,50);
+  
+    for (let i = 0; i < bubbles.length; i++) {
+    let bubble = bubbles[i];
+    displayTime(bubble); // Call displayTime() for each bubble object
+  }
+  
+  
 }
+
+//____________________________________________
+//my other functions
+//______________________
+
+
 
 function systemStart() {
   orderNum = inpX.value();
   console.log(orderNum);
   countdownBoolean = 1;
   fill(0);
-  text(orderNum, width - 150,100);
+  triggerorderNum=orderNum
+  
 }
 
 function countdownFunction() {
@@ -95,14 +131,59 @@ function countdownFunction() {
 function finishStage() {
   countdownList.push(countdownTimer);
   countdownBoolean = 0;
+
 }
 
 function nextStage() {
   stageNum = stageNum + 1;
   countdownTimer = stagesDuration[stageNum-1];
   countdownBoolean = 1;
+  
+
+  
+  let yPos = (bubbles.length + 3.333333) * rowHeight; // Calculate y position based on the number of instances
+  let bubble = { x: width - 120, y: yPos }; // Create a new bubble object with fixed y position
+  bubbles.push(bubble); // Add the new bubble object to the bubbles array
+
+  updateTime(bubble); // Update the joinTime for the newly added bubble object
+
+}
+  
+
+
+
+
+function saveImg (){
+  save(orderNum)
+
 }
 
-function saveImage() {
-  save(orderNum);
+
+function funcTime(){
+  
+  let time = [hour(),minute(),second()]
+  let separator =' : ' 
+  let joinTime = join(time,separator)
+  fill(200)
+  textSize(100)
+  text (joinTime, width / 2 - 125,600)
+  
 }
+
+//____________________________________________
+
+function updateTime(bubble) {
+  let time = [hour(), minute(), second()];
+  let separator = ' : ';
+  let joinTime = join(time, separator); // Update the joinTime variable
+
+  bubble.joinTime = joinTime; // Assign the joinTime to the bubble object
+}
+
+function displayTime(bubble) {
+  fill(0);
+  textSize(20);
+  text(bubble.joinTime, bubble.x, bubble.y); // Display the joinTime for the bubble object
+}
+
+//____________________________________________
