@@ -166,7 +166,7 @@ function funcTime(){
   let joinTime = join(time,separator)
   fill(200)
   textSize(100)
-  text (joinTime, width / 2 - 125,600)
+  text (joinTime, width / 2 - 125,700)
   
 }
 
